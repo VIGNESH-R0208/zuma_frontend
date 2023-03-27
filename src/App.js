@@ -19,7 +19,7 @@ import React from "react";
 
 
 function App() {
-  const url="http://localhost:8000/document"
+  const url="https://zuma-task-backendd.onrender.com/document"
 
 
   const[openModal,setOpenModal]=useState(false)
@@ -42,7 +42,7 @@ function App() {
 
   const handleDeleteDocument=(e)=>{
     setDeleteDocumentPath(e.target.value)
-    console.log(e.target.value)
+    //console.log(e.target.value)
 
  }
  
@@ -59,7 +59,7 @@ function App() {
      }
     
      setaddDocument(newAddData)
-     console.log(newAddData)
+     //console.log(newAddData)
 
   }
   
@@ -75,11 +75,11 @@ function App() {
           'content-type': 'application/json'
       },
   }).then((res =>{
-    console.log(res)
+    ////console.log(res)
        
   
     res.json().then(data=>{
-      console.log(data)
+      //console.log(data)
     })
   }))
   
@@ -98,23 +98,23 @@ function App() {
      
 
   }).then((res =>{
-    console.log(res)
-    if(res.statusText ==='OK')
+    //console.log(res)
+    if(res.status === 200)
            {
 
             toast.success('Document Deleted successfully')
            }
-           else if(res.statusText ==='Bad Gateway')
+           else if(res.status === 502)
            {
-              console.log(res)
+              //console.log(res)
             toast.error('Path Does Not Exist')
            }
            else if(res.statusText ==='Bad Request')
            {
-              console.log(res)
+              //console.log(res.status === 400)
             toast.error('Path is Missing')
            }
-       console.log(res.statusText)
+       //console.log(res.statusText)
   
     res.json()
   }))
@@ -124,8 +124,8 @@ function App() {
  
   async function submitDocument(event){
      event.preventDefault();
-     console.log(addDocument.path)
-     console.log(addDocument.document.text)
+     //console.log(addDocument.path)
+     //console.log(addDocument.document.text)
        await fetch(url, {
             method: 'POST',
             mode: 'cors',
@@ -138,37 +138,38 @@ function App() {
             body: JSON.stringify(addDocument)
 
         }).then((res =>{
-           if(res.statusText ==='OK')
+          //console.log(res)
+           if(res.status === 200)
            {
 
             toast.success('Document added successfully')
            }
-           else if(res.statusText ==='Conflict')
+           else if(res.status === 409)
            {
-            console.log(res)
+            //console.log(res)
             toast.error('Document with this path already exists')
            }
-           else if(res.statusText ==='INTERNAL_SERVER_ERROR')
+           else if(res.status === 500)
            {
-              console.log(res)
+              //console.log(res)
             toast.error('INTERNAL SERVER ERROR'+ res.status)
            }
-           console.log(res.statusText)
+           //console.log(res.statusText)
         
           res.json()
         }))
           // .then(data => {
-          //   console.log(data)
-          //   console.log()
+          //   //console.log(data)
+          //   //console.log()
           // })
           .catch(function (erro) {
-            console.log(erro);
+            //console.log(erro);
         });
       // axios.post (url,{
       //   path:addDocument.path,
       //   document:addDocument.document
       // }).then(res =>{
-      //   console.log(res.data)
+      //   //console.log(res.data)
       // })
       setOpenModal(false)
       setaddDocument({  path:"",
@@ -192,11 +193,11 @@ function App() {
           'content-type': 'application/json'
       },
   }).then((res =>{
-    console.log(res)
+    //console.log(res)
        
   
     res.json().then(data=>{
-      console.log(data.data)
+      //console.log(data.data)
       setfilterResult(data.data)
       
     })
